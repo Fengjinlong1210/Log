@@ -38,12 +38,14 @@ namespace Log
         {
             // 如果路径不存在就创建路径, 然后打开文件
             Util::File::create_directory(Util::File::path(_pathname));
-            _ofs.open(_pathname, std::ios::binary | std::ios::app);
+            _ofs.open(_pathname, std::ios::app | std::ios::binary);
             assert(_ofs.is_open());
         }
 
         void log(const char *data, size_t len)
         {
+            // std::cout << "data = " << data;
+            //  std::cout << "len = " << len << std::endl;
             _ofs.write(data, len);
             if (!_ofs.good())
             {
