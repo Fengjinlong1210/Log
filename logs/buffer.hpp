@@ -22,12 +22,13 @@ namespace Log
             // 判断是否需要扩容, 如果不需要, 正常插入数据
             //assert(len <= writeableSize());
             expandCapacity(len);
-            std::cout << "len = " << len << std::endl;
-            std::cout << "write pos = " << _writer_pos << std::endl;
+            //std::cout << "buffer::push len = " << len << std::endl;
             std::copy(data, data + len, &_buffer[_writer_pos]);
+            //std::cout << data;
             // 移动写入指针
-            std::cout << "copy success" << std::endl;
+            //std::cout << "copy success" << std::endl;
             moveWriter(len);
+            //std::cout << "write pos = " << _writer_pos << std::endl;
         }
         // 移动读指针
         void moveReader(size_t len)
@@ -38,7 +39,11 @@ namespace Log
         {
             _writer_pos += len;
         }
-
+        void getPtrPos()
+        {
+            std::cout << "_writepos = " << _writer_pos << std::endl;
+            std::cout << "_readpos = " << _reader_pos << std::endl;
+        }
         // 判空
         bool empty()
         {
@@ -51,20 +56,21 @@ namespace Log
         }
         void swap(Buffer &buff)
         {
-            std::swap(_buffer, buff._buffer);
+            _buffer.swap(buff._buffer);
             std::swap(_reader_pos, buff._reader_pos);
             std::swap(_writer_pos, buff._writer_pos);
         }
         // 返回可写空间大小
         size_t writeableSize()
         {
+            //std::cout << "writeableSize = " << _buffer.size() - _writer_pos << std::endl;
             return _buffer.size() - _writer_pos;
         }
         // 返回可读数据大小
         size_t readableSize()
         {
-            std::cout << "read pos = " << _reader_pos << std::endl;
-            std::cout << "write pos = " << _writer_pos << std::endl;
+            //std::cout << "read pos = " << _reader_pos << std::endl;
+            // std::cout << "write pos = " << _writer_pos << std::endl;
             return _writer_pos - _reader_pos;
         }
 
@@ -73,6 +79,13 @@ namespace Log
             return &_buffer[_reader_pos];
         }
 
+        std::string getReadableData()
+        {
+            std::string ret;
+            std::copy(&_buffer[_reader_pos], &_buffer[_reader_pos]+readableSize(), &ret[0]);
+            std::cout << ret;
+            return ret;
+        }
     private:
         void expandCapacity(size_t len)
         {
@@ -89,9 +102,9 @@ namespace Log
                 // 大于阈值时, 线性增长
                 new_size = _buffer.size() + LINEAR_GROWTH + len;
             }
-            std::cout << "new size = " << new_size << std::endl;
+            //std::cout << "new size = " << new_size << std::endl;
             _buffer.resize(new_size);
-            std::cout << "buffer.size = " << _buffer.size() << std::endl;
+            //std::cout << "buffer.size = " << _buffer.size() << std::endl;
         }
 
     private:
