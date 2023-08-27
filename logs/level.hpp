@@ -9,12 +9,12 @@ namespace Log
         enum Level
         {
             UNKNOW = 0,
-            DEBUG,
-            INFO,
-            WARNING,
-            ERROR,
-            FATAL,
-            OFF
+            DEBUG = 1,
+            INFO = 2,
+            WARNING = 3,
+            ERROR = 4,
+            FATAL = 5,
+            OFF = 6
         };
 
         static const char *levelToStr(Log::LogLevel::Level lv)
