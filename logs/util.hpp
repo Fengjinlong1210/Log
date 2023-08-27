@@ -53,7 +53,7 @@ namespace Log
                 while (offset < path.size())
                 {
                     pos = path.find_first_of("/\\", offset);
-                    std::cout << "pos = " << pos << std::endl;
+                    //std::cout << "pos = " << pos << std::endl;
                     if (pos == std::string::npos)
                     {
                         mkdir(path.c_str(), 0777);
