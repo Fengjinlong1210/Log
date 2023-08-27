@@ -24,4 +24,5 @@ namespace Log
     #define WARNING(fmt, ...) Log::rootLogger()->warning(fmt, ##__VA_ARGS__)
     #define ERROR(fmt, ...) Log::rootLogger()->error(fmt, ##__VA_ARGS__)
     #define FATAL(fmt, ...) Log::rootLogger()->fatal(fmt, ##__VA_ARGS__)
+    
 }
